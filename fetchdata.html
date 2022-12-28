@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch and convert</title>
+    
+    <style>
+        .table1{
+            border: 2px solid grey;
+            border-collapse: collapse;
+            width: 1000px;
+            height: 90px;
+            margin: 0px;
+            color: black;
+            ;
+        }
+
+        .thead{
+            background-color: black;
+            color:white;
+            height:50px;
+        }
+        .tbody tr {
+            border: 2px solid grey;
+            height:40px;
+        }
+
+        
+    </style>
+
+</head>
+
+<body>
+<div class="container"></div>
+
+<h1 style="text-align: center; ">JSON TO TABLE</h1>
+
+
+<table class="table1">
+    <thead class="thead">
+        <tr>
+            <td>NAME</td>
+            <td>ADDRESS</td>
+            <td>SALARY</td>
+            <td>DATE OF JOINING</td>
+        </tr>
+   </thead>
+   <tbody id="tablebody" class="tbody">
+    
+   </tbody>
+</table>
+
+<h2  >salary</h2>
+<h3 id="sal5" style="color:grey"></h3>
+
+<h2>THE DECEMBER_BATCH</h2>
+<h3 id="dec" style="color:grey"> </h3>
+
+
+<!--.................................Script...............................-->
+<script>
+        fetch('https://rawcdn.githack.com/kmitprojectschool/sem12022/788c820e40a750fecb30433c8d346457b7859abc/employee.json').then((data)=>{
+            //console.log(data);
+            return data.json();
+        }).then((objdata)=>{
+           // console.log(objdata.Employees.length);
+            var tabledata="";
+            var salabove5="<ul>";
+            var decb="<ul>";
+            
+            for(var i=0;i<objdata.Employees.length;i++)
+            {
+                //destructing of objects.....
+                //for Table
+                const{Name:n,Address:a,Salary:s,DateOfJoining:d}=objdata.Employees[i];
+                tabledata+= `<tr>
+                <td>${n}</td>
+                <td>${a}</td>
+                <td>${s}</td>
+                 <td>${d}</td>
+                </tr>`; 
+
+                if(s>50000){
+                    salabove5+=`<li>${n}</li>`; 
+                }
+                
+
+                if(d.slice(3,5)=='12'){
+                        decb+=`<li>${n}</li>`;
+                }
+                
+            }
+            salabove5+="</ul>"
+            
+            decb+="</ul>";
+            
+            document.getElementById("tablebody").innerHTML=tabledata;
+            document.getElementById("sal5").innerHTML=salabove5;
+            document.getElementById("dec").innerHTML=decb;
+        })
+        
+
+
+
+
+
+</script>
+</div>
+</body>
+
+</html>
